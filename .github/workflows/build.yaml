@@ -18,9 +18,6 @@ jobs:
         with:
           java-version: "21"
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
       - name: Build Java & set version
         run: |
           ./gradlew build
