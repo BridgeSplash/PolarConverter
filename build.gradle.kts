@@ -25,5 +25,10 @@ tasks{
             attributes["Multi-Release"] = true
         }
     }
+}
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
