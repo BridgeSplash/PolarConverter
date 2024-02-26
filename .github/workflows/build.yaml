@@ -1,0 +1,35 @@
+name: "Build and deploy"
+
+on:
+  push:
+    branches: [master]
+  pull_request: {}
+
+jobs:
+
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: "./.github/actions/java"
+        with:
+          java-version: "21"
+
+      - name: Build Java & set version
+        run: |
+          ./gradlew build
+          VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Upload Release Asset
+        id: upload-release-server-jar
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "${{ env.VERSION }}"
+          files: |
+            ./build/libs/PolarConverter-*.jar

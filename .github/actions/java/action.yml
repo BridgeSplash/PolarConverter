@@ -1,0 +1,17 @@
+name: Install Tools & Dependencies
+description: Install required tools and dependencies
+inputs:
+  java-version:
+    description: "The Java version to use"
+    required: true
+    default: "21"
+runs:
+  using: composite
+  steps:
+    - name: Use Java ${{ inputs.java-version }}
+      if: ${{ inputs.install-java == 'true' }}
+      uses: actions/setup-java@v4
+      with:
+        distribution: adopt
+        java-version: ${{ inputs.java-version }}
+        cache: "gradle"
