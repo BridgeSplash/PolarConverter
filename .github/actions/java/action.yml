@@ -12,6 +12,5 @@ runs:
       if: ${{ inputs.install-java == 'true' }}
       uses: actions/setup-java@v4
       with:
-        distribution: adopt
+        distribution: temurin
         java-version: ${{ inputs.java-version }}
-        cache: "gradle"
